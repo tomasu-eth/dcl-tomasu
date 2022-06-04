@@ -1,0 +1,37 @@
+{
+  "display": {
+    "title": "Tomasu Changing Room",
+    "favicon": "favicon_asset"
+  },
+  "requiredPermissions": [
+    "ALLOW_TO_TRIGGER_AVATAR_EMOTE"
+  ],
+  "owner": "tomasu",
+  "contact": {
+    "name": "tomasu",
+    "email": ""
+  },
+  "main": "bin/game.js",
+  "tags": [],
+  "scene": {
+    "parcels": [
+      "-105,-95"
+    ],
+    "base": "-105,-95"
+  },
+  "communications": {
+    "type": "webrtc",
+    "signalling": "https://signalling-01.decentraland.org"
+  },
+  "policy": {
+    "contentRating": "E",
+    "fly": true,
+    "voiceEnabled": true,
+    "blacklist": [],
+    "teleportPosition": ""
+  },
+  "source": {
+    "origin": "builder",
+    "projectId": "2f844cbe-a354-4c43-af73-7ef129ee58a0"
+  }
+}
