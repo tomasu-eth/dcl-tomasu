@@ -13,15 +13,18 @@ class TigerLerpData {
 
 class TigerWalk {
 
-    tiger: Entity
+    tigerEntity: Entity
+    tigerClickableEntity
 
-    constructor(tiger: Entity) {
-        this.tiger = tiger;
+    constructor(tigerEntity: Entity, tigerClickableEntity: Entity) {
+        this.tigerEntity = tigerEntity
+        this.tigerClickableEntity = tigerClickableEntity
     }
 
     update(dt: number) {
-        let tigerTransform = this.tiger.getComponent(Transform)
-        let lerp = this.tiger.getComponent(TigerLerpData)
+        let tigerClickableTransform = this.tigerClickableEntity.getComponent(Transform)
+        let tigerTransform = this.tigerEntity.getComponent(Transform)
+        let lerp = this.tigerEntity.getComponent(TigerLerpData)
 
         lerp.target.x = (tigerTransform.position.x > camera.position.x) ? camera.position.x + 1 : camera.position.x - 1;
         lerp.target.y = 0.1
@@ -31,7 +34,9 @@ class TigerWalk {
             lerp.target.z > 1 && lerp.target.z < 14) {
 
             lerp.fraction += dt / 600
-            tigerTransform.position = Vector3.Lerp(tigerTransform.position, lerp.target, lerp.fraction)
+            var lerpVector = Vector3.Lerp(tigerTransform.position, lerp.target, lerp.fraction)
+            tigerTransform.position = lerpVector
+            tigerClickableTransform.position = lerpVector
         } else {
             lerp.fraction = 0
         }
@@ -48,8 +53,14 @@ export function addTiger() {
         new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:cw_native_american_tiara", "Native American Hat"),
     ]
 
+    var tigerLerpData = new TigerLerpData()
+
     var tigerEntity = tiger.getDclAvatarEntity()
-    tigerEntity.addComponent(new TigerLerpData())
+    tigerEntity.addComponent(tigerLerpData)
     engine.addEntity(tigerEntity)
-    engine.addSystem(new TigerWalk(tigerEntity))
+
+    var tigerClickableEntity = tiger.getDclClickableEntity()
+    engine.addEntity(tigerClickableEntity)
+
+    engine.addSystem(new TigerWalk(tigerEntity, tigerClickableEntity))
 }

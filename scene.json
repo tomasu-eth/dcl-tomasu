@@ -1,6 +1,7 @@
 {
   "display": {
-    "title": "Tomasu Changing Room",
+    "title": "tomasu-land",
+    "navmapThumbnail": "images/scene-thumbnail.png",
     "favicon": "favicon_asset"
   },
   "requiredPermissions": [

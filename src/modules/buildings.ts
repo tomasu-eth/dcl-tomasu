@@ -60,7 +60,7 @@ export function addBuilding() {
     buildingSide_2.addComponent(gltfShapeBuildingSide_1)
     const buildingSideTransform_2 = new Transform({
         position: new Vector3(0.3, 2.8, 6),
-        rotation: new Quaternion(0, -1, 0, 1), 
+        rotation: new Quaternion(0, -1, 0, 1),
         scale: new Vector3(-1.3, 1.3, 1.3)
     })
 

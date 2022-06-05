@@ -52,7 +52,7 @@ export class WearableSet {
         avatar.addComponent(avatarShape);
         avatar.addComponent(new Transform({
             position: this.position,
-            rotation: new Quaternion(180 + this.rotationOffset, 0, 0, 0)
+            rotation: Quaternion.Euler(0, 180 + this.rotationOffset, 0)
         }));
 
         if (this.isFacingVisitor) {
@@ -69,7 +69,7 @@ export class WearableSet {
         entity.addComponent(plane)
         entity.addComponent(new Transform({
             position: this.position,
-            rotation: new Quaternion(180 + this.rotationOffset, 0, 0, 0),
+            rotation: Quaternion.Euler(0, 180 + this.rotationOffset, 0),
             scale: new Vector3(0.5, 4, 1)
         }));
 
@@ -112,8 +112,12 @@ export function addWearables() {
                 "right8": new Vector3(5, 0.1, 14),
                 "right9": new Vector3(4, 0.1, 14),
                 "right10": new Vector3(3, 0.1, 14),
-                "right11": new Vector3(2, 0.1, 14),
+                "right11": new Vector3(1.5, 0.1, 13.5),
             },
+            "side": {
+                "back1": new Vector3(1, 0.1, 12),
+                "back2": new Vector3(1, 0.1, 11),
+            }
         }
     }
 
@@ -157,14 +161,14 @@ export function addWearables() {
         ]),
         new WearableSet(displayPositions.ground.back.right7, [
             new Wearable("urn:decentraland:ethereum:collections-v1:dappcraft_moonminer:moonminer_neurahairs_hair", "DappCraft Moon Miner Neurahairs"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x2cdada9435c976c5e2d13b0b48a90b4086f32580:3", "Xenia Joost Rufflanza"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x2cdada9435c976c5e2d13b0b48a90b4086f32580:3", "Xenia Joost x XR Couture Rufflanza"),
             new Wearable("urn:decentraland:matic:collections-v2:0xf73841bd6ee00efd3036a54bffc5f914ea1ef469:2", "Michi Todd White Rabbit Mask"),
             new Wearable("urn:decentraland:matic:collections-v2:0xd2bd1cadfe12ee9d37ff95912af7f8a97ae71ba0:0", "Fabeeo Breen White Slides FBRN"),
         ]),
         new WearableSet(displayPositions.ground.back.right8, [
             new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:0", "Vogu Patrician TARS Head"),
             new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen Comic Boom"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Comic Boom"),
             new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
         ]),
         new WearableSet(displayPositions.ground.back.right9, [
@@ -182,11 +186,35 @@ export function addWearables() {
             new Wearable("urn:decentraland:matic:collections-v2:0xc308ba35130258b7255455f2225262656ceb0302:1", "DuckiezKing Fallen Angel Helmet"),
             new Wearable("urn:decentraland:matic:collections-v2:0xc308ba35130258b7255455f2225262656ceb0302:2", "DuckiezKing Fallen Angel Wings"),
         ]),
+        new WearableSet(displayPositions.ground.side.back1, [
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:0", "Last Slice Yasuke Kusazuri"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:1", "Last Slice Yasuke Kabuto"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:2", "Last Slice Yasuke Do"),
+        ]),
+        new WearableSet(displayPositions.ground.side.back2, [
+            new Wearable("urn:decentraland:matic:collections-v2:0xebdb892022673a7e6bc636d6b83a721993fa6c9b:1", "Polygonal Mind x MC2 - Suit"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xebdb892022673a7e6bc636d6b83a721993fa6c9b:3", "CryptoAvatars x MC2 - Shoes"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x4f206200e9170db9ed6cc97617ff4f6f2e4ce532:1", "Metabrands x MC2 - Magic Hat"),
+        ]),
     ]
+
+    // rotate according to position
+    for (var wearableSet of displayWearableSets) {
+        for (var sidePosition in displayPositions.ground.side) {        
+            if (wearableSet.position === displayPositions.ground.side[sidePosition]) {
+                wearableSet.rotationOffset = -90
+            }
+        }
+
+        if (wearableSet.position === displayPositions.ground.back.right11) {
+            wearableSet.rotationOffset = -45
+        }
+    }
 
     // special - white neural hair to match with rabbit mask
     displayWearableSets[7].hairColor = new Color4(1, 1, 1)
 
+    // render
     displayWearableSets.forEach(s => {
         var eachAvatarEntity = s.getDclAvatarEntity()
         engine.addEntity(eachAvatarEntity)
