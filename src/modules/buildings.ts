@@ -26,6 +26,10 @@ export function addTwitterLink() {
     twitterLink.addComponent(twitterLinkTransform)
     twitterLink.addComponent(new OnPointerDown(e => {
         openExternalURL("https://twitter.com/tomasu_eth")
+    }, {
+        button: ActionButton.PRIMARY,
+        showFeedback: true,
+        hoverText: "Tomasu Twitter",
     }))
 
     engine.addEntity(twitterLink)
@@ -49,7 +53,7 @@ export function addBuilding() {
     buildingSide_1.addComponent(gltfShapeBuildingSide_1)
     const buildingSideTransform_1 = new Transform({
         position: new Vector3(10, 2.8, 15.7),
-        rotation: new Quaternion(0, 0, 0, 1), 
+        rotation: new Quaternion(0, 0, 0, 1),
         scale: new Vector3(1.3, 1.3, 1.3)
     })
 

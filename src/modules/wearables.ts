@@ -90,6 +90,10 @@ export class WearableSet {
                 },
                 ui.ButtonStyles.E
             )
+        }, {
+            button: ActionButton.PRIMARY,
+            showFeedback: true,
+            hoverText: "View Details",
         }))
 
         return entity
@@ -208,7 +212,7 @@ export function addWearables() {
 
     // rotate according to position
     for (var wearableSet of displayWearableSets) {
-        for (var sidePosition in displayPositions.ground.side) {        
+        for (var sidePosition in displayPositions.ground.side) {
             if (wearableSet.position === displayPositions.ground.side[sidePosition]) {
                 wearableSet.rotationOffset = -90
             }
@@ -219,7 +223,7 @@ export function addWearables() {
         }
 
         if (wearableSet.position === displayPositions.antelope) {
-            wearableSet.rotationOffset = 10
+            wearableSet.rotationOffset = 15
         }
     }
 
