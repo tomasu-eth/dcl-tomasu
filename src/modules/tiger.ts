@@ -1,8 +1,8 @@
 import { WearableSet, Wearable } from "./wearables"
 
 var camera = Camera.instance
-var tigerStartingPosition = new Vector3(10, 0, 8)
-var tigerTargetPosition = new Vector3(10, 0, 8)
+var tigerStartingPosition = new Vector3(9, 0, 7)
+var tigerTargetPosition = new Vector3(9, 0, 7)
 
 @Component('lerpData')
 class TigerLerpData {
