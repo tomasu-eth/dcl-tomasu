@@ -124,6 +124,11 @@ export function addWearables() {
                 "back3": new Vector3(1, 0.1, 10),
                 "back4": new Vector3(1, 0.1, 9),
                 "back5": new Vector3(1, 0.1, 8),
+                "back6": new Vector3(1, 0.1, 7),
+                "back7": new Vector3(1, 0.1, 6),
+                "back8": new Vector3(1, 0.1, 5),
+                "back9": new Vector3(1, 0.1, 4),
+                "back10": new Vector3(1, 0.1, 3),
             }
         }
     }
@@ -177,9 +182,10 @@ export function addWearables() {
         ]),
         new WearableSet(displayPositions.ground.back.right9, [
             new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:0", "Vogu Patrician TARS Head"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Comic Boom"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:2", "Vogu x Just Hype Dad Shoes"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:5", "Vogu x Just Hype Cargo Pants"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:14", "Vogu x Just Hype T + Vest"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0xe833a6827a6911c370f619fb17154d38567edd0c:1", "Fabeeo Breen Puffy Killa Exodia FBRN"),
         ]),
         new WearableSet(displayPositions.ground.back.right10, [
             new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:4", "Vogu Kouwei TARS Head"),
@@ -208,6 +214,44 @@ export function addWearables() {
             new Wearable("urn:decentraland:matic:collections-v2:0x4f206200e9170db9ed6cc97617ff4f6f2e4ce532:1", "Metabrands x MegaCube 2 Magic Hat"),
             new Wearable("urn:decentraland:matic:collections-v2:0x4e4803268deb3446f13d976407ebd1c42f51c47b:0", "LingXing Diamond Scythe"),
         ]),
+        new WearableSet(displayPositions.ground.side.back4, [
+            new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:0", "Low Poly Models x Son of Adam Stealth Cap"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Comic Boom"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xa0c974654556abdb15f806ea37ec6a5861178ca4:0", "ArtCebola Girl on the Shoulders"), 
+        ]),
+
+        // TODO: Wait until getting this from MegaCube
+        // new WearableSet(displayPositions.ground.side.back5, [
+        //     new Wearable("urn:decentraland:matic:collections-v2:0x29470eea1ec37f25669879d0aaf9bebcaf0f92c1:1", "Monster Hall Winged Antelope Adventurer"),
+        // ]),
+
+        // TODO: Study why Dolce & Gabbana linked collection is not working
+        // https://peer-lb.decentraland.org/lambdas/profiles?id=0x0c403e0d57eeb8f091bcfa8efdf01c00509f04f2
+        // https://wearables-api.unxd.com/registry/dolcegabbana-disco-drip/address/0x0C403e0D57Eeb8f091bCfA8EFdF01c00509f04f2/assets
+
+        // new WearableSet(displayPositions.ground.side.back4, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:12691adb-1eb2-45c7-b6a3-84b74bff91b6", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back5, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:e5fbba88-a37f-46a0-a66f-46309043438e", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back6, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:9cb45e1e-b724-48a3-988c-0ea525d53171", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back7, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:9cb45e1e-b724-48a3-988c-0ea525d53171", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back8, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:dc209acf-297d-465c-a9a4-f56126caee75", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back9, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:a8443383-cdcc-4b69-8fd5-c849f9aa4375", "Testing"),
+        // ]),
+        // new WearableSet(displayPositions.ground.side.back10, [
+        //     new Wearable("urn:decentraland:matic:collections-thirdparty:dolcegabbana-disco-drip:0x4bD77619a75C8EdA181e3587339E7011DA75bF0E:e72ce7ea-dae8-4d3a-b612-98b35bcbd0c5", "Testing"),
+        // ]),
     ]
 
     // rotate according to position
@@ -229,6 +273,13 @@ export function addWearables() {
 
     // special - white neural hair to match with rabbit mask
     displayWearableSets[8].hairColor = new Color4(1, 1, 1)
+
+    // special - hair color for vogu heads
+    displayWearableSets[9].hairColor = new Color4(1, 1, 1)
+    displayWearableSets[10].hairColor = new Color4(0, 0, 0)
+    displayWearableSets[11].hairColor = new Color4(1, 1, 1)
+
+    displayWearableSets[14].hairColor = new Color4(0, 0, 0)
 
     // render
     displayWearableSets.forEach(s => {
