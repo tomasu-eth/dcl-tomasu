@@ -1,4 +1,5 @@
 import * as ui from '@dcl/ui-scene-utils'
+import * as utils from '@dcl/ecs-scene-utils'
 import { triggerEmote, PredefinedEmote } from "@decentraland/RestrictedActions"
 
 var transparentMaterial = new Material()
@@ -25,9 +26,10 @@ export class WearableSet {
     wearables: Wearable[]
     hairColor: Color4
 
-    constructor(position: Vector3 = null, wearables: Wearable[] = null) {
+    constructor(position: Vector3 = null, wearables: Wearable[] = null, hairColor: Color4 = null) {
         this.position = position
         this.wearables = wearables
+        this.hairColor = hairColor
     }
 
     getDclAvatarEntity(): Entity {
@@ -46,7 +48,7 @@ export class WearableSet {
         avatarShape.hairColor = this.hairColor ?? defaultHairColor
 
         avatarShape.wearables = this.wearables.map(w => w.key)
-        avatarShape.name = ""
+        avatarShape.name = null // '\u{01F447}'  
         avatarShape.useDummyModel = true
 
         avatar.addComponent(avatarShape);
@@ -91,7 +93,7 @@ export class WearableSet {
                 ui.ButtonStyles.E
             )
         }, {
-            button: ActionButton.PRIMARY,
+            button: ActionButton.POINTER,
             showFeedback: true,
             hoverText: "View Details",
         }))
@@ -136,36 +138,44 @@ export function addWearables() {
     var displayWearableSets = [
         new WearableSet(displayPositions.antelope, [
             new Wearable("urn:decentraland:matic:collections-v2:0x29470eea1ec37f25669879d0aaf9bebcaf0f92c1:0", "Monster Hall Winged Antelope Cavalier"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x07d03ca2c27f29ec3c4cf3afad857c5af13f61cd:8", "WonderZone Rugged Cowboy Hat"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right1, [
             new Wearable("urn:decentraland:matic:collections-v2:0xfcf2ea9c8be672e3a22979dc1f2e9b8ac295babf:1", "ManaWitch 80s Workout"),
             new Wearable("urn:decentraland:matic:collections-v2:0xf3cae1159280462fbd556d6133977d91f18c5529:0", "Genesis SushiSwap Sneakers"),
             new Wearable("urn:decentraland:matic:collections-v2:0x1e9d72c887f1b49a87007cb2dd1fd77b64cf111c:0", "Dragon City x Kiko Tong Unicorn Hood"),
             new Wearable("urn:decentraland:matic:collections-v2:0xe3ea740d786c2eb785ea9fb5a089e3924342a4eb:0", "Sugar Club Donut set"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right2, [
             new Wearable("urn:decentraland:ethereum:collections-v1:pm_outtathisworld:pm_col1_panda_helmet", "Polygonal Mind Panda Helmet"),
             new Wearable("urn:decentraland:ethereum:collections-v1:china_flying:china_flying_pants", "China Flying Boy Pants"),
             new Wearable("urn:decentraland:ethereum:collections-v1:china_flying:china_flying_clothes_male", "China Flying Boy Clothes"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right3, [
             new Wearable("urn:decentraland:ethereum:collections-v1:ml_liondance:lion_dance_feet", "Dragon City Lion Dance Shoes"),
             new Wearable("urn:decentraland:ethereum:collections-v1:ml_liondance:lion_dance_hat", "Dragon City Lion Dance Hat"),
             new Wearable("urn:decentraland:ethereum:collections-v1:ml_liondance:lion_dance_lower_body", "Dragon City Lion Dance Pants"),
             new Wearable("urn:decentraland:ethereum:collections-v1:ml_liondance:lion_dance_upper_body", "Dragon City Lion Dance Coat"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right4, [
             new Wearable("urn:decentraland:matic:collections-v2:0x07899fe3c061a4485d11d8d81bcb9f98bbb13d68:0", "Malloy Rainbowsaurus-Rex Pyjama Suit"),
             new Wearable("urn:decentraland:matic:collections-v2:0x07899fe3c061a4485d11d8d81bcb9f98bbb13d68:1", "Malloy Rainbowsaurus-Rex Hood"),
             new Wearable("urn:decentraland:matic:collections-v2:0x07899fe3c061a4485d11d8d81bcb9f98bbb13d68:2", "Malloy Rainbowsaurus-Rex Slippers"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right5, [
             new Wearable("urn:decentraland:matic:collections-v2:0x127f8dc3d7dd91c66dc96958df1f0edb14511f84:0", "Malloy Flamingo Party Outfit"),
             new Wearable("urn:decentraland:matic:collections-v2:0xf4957ada7f03cefd69c249371a0687654f756451:0", "DappCraft Militia General"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right6, [
             new Wearable("urn:decentraland:matic:collections-v2:0x150279bdddd599e316d8a64dc032345c7754923f:1", "DappCraft Pride Umbrella Suit"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right7, [
             new Wearable("urn:decentraland:ethereum:collections-v1:dc_niftyblocksmith:blocksmith_upper_body", "DappCraft DC Nifty Blocksmith Jacket"),
             new Wearable("urn:decentraland:ethereum:collections-v1:dc_niftyblocksmith:blocksmith_lower_body", "DappCraft DC Nifty Blocksmith Trousers"),
@@ -174,60 +184,110 @@ export function addWearables() {
             new Wearable("urn:decentraland:ethereum:collections-v1:dc_niftyblocksmith:blocksmith_top_head", "DappCraft DC Nifty Blocksmith Drone"),
             new Wearable("urn:decentraland:ethereum:collections-v1:dc_niftyblocksmith:blocksmith_eyewear", "DappCraft DC Nifty Blocksmith Diamantex"),
         ]),
+
         new WearableSet(displayPositions.ground.back.right8, [
             new Wearable("urn:decentraland:ethereum:collections-v1:dappcraft_moonminer:moonminer_neurahairs_hair", "DappCraft Moon Miner Neurahairs"),
             new Wearable("urn:decentraland:matic:collections-v2:0x2cdada9435c976c5e2d13b0b48a90b4086f32580:3", "Xenia Joost x XR Couture Rufflanza"),
             new Wearable("urn:decentraland:matic:collections-v2:0xf73841bd6ee00efd3036a54bffc5f914ea1ef469:2", "Michi Todd White Rabbit Mask"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xd2bd1cadfe12ee9d37ff95912af7f8a97ae71ba0:0", "Fabeeo Breen White Slides FBRN"),
-        ]),
+            new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:f_cw_trendy_sport_shoes_feet", "Trendy Sport Shoes"),
+            
+        ], new Color4(1, 1, 1)),
+
         new WearableSet(displayPositions.ground.back.right9, [
             new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:0", "Vogu Patrician TARS Head"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:2", "Vogu x Just Hype Dad Shoes"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:5", "Vogu x Just Hype Cargo Pants"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:14", "Vogu x Just Hype T + Vest"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:2", "Vogu x Just Hype Dad Shoes"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:5", "Vogu x Just Hype Cargo Pants"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:14", "Vogu x Just Hype T + Vest"),
             // new Wearable("urn:decentraland:matic:collections-v2:0xe833a6827a6911c370f619fb17154d38567edd0c:1", "Fabeeo Breen Puffy Killa Exodia FBRN"),
-        ]),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Cosmic Boom"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
+        ], new Color4(1, 1, 1)),
+
         new WearableSet(displayPositions.ground.back.right10, [
             new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:4", "Vogu Kouwei TARS Head"),
             // new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:3", "Vogu Core TARS Head"),
             new Wearable("urn:decentraland:ethereum:collections-v1:dcl_launch:launch_tshirt_upper_body", "Decentraland Launch T-Shirt"),
             new Wearable("urn:decentraland:matic:collections-v2:0x7993a8af29c930bd472a1a37b3af2d7855a441ee:2", "Subnation Alpha Pants"),
             new Wearable("urn:decentraland:matic:collections-v2:0x588dab7702ae280e7c8967de8999eb635e4b5c2e:3", "Atari Hotels Gravity Shoes"),
-        ]),
-        new WearableSet(displayPositions.ground.side.back1, [
-            new Wearable("urn:decentraland:matic:collections-v2:0x4088262efc19b54529a00b96efec9de8f60febf0:0", "DuckiezKing Matsu Mecha ZG 10-1 AP Full Body"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:1", "Vogu Ongo TARS Head"),
-        ]),
+        ], new Color4(0.43573683500289917, 0.43164077401161194, 0.43137919902801514)),
+
         new WearableSet(displayPositions.ground.back.right11, [
             new Wearable("urn:decentraland:matic:collections-v2:0xc308ba35130258b7255455f2225262656ceb0302:2", "DuckiezKing Fallen Angel Helmet"),
             new Wearable("urn:decentraland:matic:collections-v2:0xc308ba35130258b7255455f2225262656ceb0302:0", "DuckiezKing Fallen Angel Body"),
             new Wearable("urn:decentraland:matic:collections-v2:0xc308ba35130258b7255455f2225262656ceb0302:1", "DuckiezKing Fallen Angel Wings"),
         ]),
+
+        new WearableSet(displayPositions.ground.side.back1, [
+            new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:1", "Vogu Ongo TARS Head"),
+            new Wearable("urn:decentraland:matic:collections-v2:0x4088262efc19b54529a00b96efec9de8f60febf0:0", "DuckiezKing Matsu Mecha ZG 10-1 AP Full Body"),
+        ], new Color4(1, 1, 1)),
+
         new WearableSet(displayPositions.ground.side.back2, [
-            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:0", "Last Slice Yasuke Kusazuri"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:1", "Last Slice Yasuke Kabuto"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:2", "Last Slice Yasuke Do"),
-        ]),
+            new Wearable("urn:decentraland:matic:collections-v2:0x493711707a4a396c4f58ec446348452f845bfe96:3", "Vogu Core TARS Head"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xd5e4048836b6146cd34d46f0092393b8d47ad518:0", "DappCraft FOMO Engineer Jacket"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xd5e4048836b6146cd34d46f0092393b8d47ad518:1", "DappCraft FOMO Engineer Trousers"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xd5e4048836b6146cd34d46f0092393b8d47ad518:3", "DappCraft FOMO Engineer Boots"),
+        ], new Color4(0.9900000095367432, 0.699052095413208, 0.3337410092353821)),
+
         new WearableSet(displayPositions.ground.side.back3, [
             new Wearable("urn:decentraland:matic:collections-v2:0xebdb892022673a7e6bc636d6b83a721993fa6c9b:1", "Polygonal Mind x MegaCube 2 Suit"),
             new Wearable("urn:decentraland:matic:collections-v2:0xebdb892022673a7e6bc636d6b83a721993fa6c9b:3", "CryptoAvatars x MegaCube 2 Shoes"),
             new Wearable("urn:decentraland:matic:collections-v2:0x4f206200e9170db9ed6cc97617ff4f6f2e4ce532:1", "Metabrands x MegaCube 2 Magic Hat"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x4e4803268deb3446f13d976407ebd1c42f51c47b:0", "LingXing Diamond Scythe"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0x4e4803268deb3446f13d976407ebd1c42f51c47b:0", "LingXing Diamond Scythe"),
         ]),
+
+        // TODO: TBC with right9
+        // new WearableSet(displayPositions.ground.side.back4, [
+        //     new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
+        //     new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:0", "Low Poly Models x Son of Adam Stealth Cap"),
+        //     new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Cosmic Boom"),
+        //     new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
+        //     new Wearable("urn:decentraland:matic:collections-v2:0xa0c974654556abdb15f806ea37ec6a5861178ca4:0", "ArtCebola Girl on the Shoulders"), 
+        // ]),
+
         new WearableSet(displayPositions.ground.side.back4, [
-            new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:2", "Low Poly Models x Son of Adam Dissident High Tops"),
+            new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:m_cw_trendy_jacket_upper_body", "Trendy Sportwear Jacket"),
+            new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:m_cw_trendy_pants_lower_body", "Trendy Sport Male Pants"),
+            new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:m_cw_trendy_sport_shoes_feet", "Trendy Sport Sandals"),
+            // new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:cw_trendy_sport_hat", "Trendy Sport Hat"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xf61d27b7899d2641b02c56f4617f2d01f63f7ee5:0", "Polygonal Mind Illuminated Street Cap"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0xfdac3c4ffccb6e05d3e9a9d69ec95edeb6e8c844:5", "AO2022 Green Line Calling Lens"),
+        ]),
+
+        new WearableSet(displayPositions.ground.side.back5, [
             new Wearable("urn:decentraland:matic:collections-v2:0xf3eb38b1649bdccc8761f3a0526b3173597a0363:0", "Low Poly Models x Son of Adam Stealth Cap"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xe66970fac32ffc972d2b6ef089d136441bc12b78:0", "Fabeeo Breen x XR Couture Comic Boom"),
-            new Wearable("urn:decentraland:matic:collections-v2:0x705652b66a12dcf782b0b3d5673fbf0c1797eba2:10", "Vogu x Just Hype Thermal Shorts"),
-            new Wearable("urn:decentraland:matic:collections-v2:0xa0c974654556abdb15f806ea37ec6a5861178ca4:0", "ArtCebola Girl on the Shoulders"), 
+            new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:f_cw_trendy_jacket_upper_body", "Trendy Sportwear Jacket"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xf61d27b7899d2641b02c56f4617f2d01f63f7ee5:2", "Polygonal Mind Illuminated Street Cargo Pants"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xf61d27b7899d2641b02c56f4617f2d01f63f7ee5:3", "Polygonal Mind Illuminated Street Sneakers"),
+            // new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:f_cw_trendy_pants_lower_body", "Trendy Sport Female Pants"),
+        ]),
+
+        new WearableSet(displayPositions.ground.side.back6, [
+            new Wearable("urn:decentraland:matic:collections-v2:0x0f6429c9c8a8ba3261bc507eccd5356b3fbfd8c6:0", "Blvck Paris x Decentral Games Tracksuit"),
+            new Wearable("urn:decentraland:ethereum:collections-v1:dcl_launch:dcl_earrings_earring", "Decentraland Logo Earrings"),
+        ]),
+
+        new WearableSet(displayPositions.ground.side.back7, [
+            new Wearable("urn:decentraland:matic:collections-v2:0xf213000d809e13dbb3e43bd098c276991a277b91:2", "Uniqly.io Pickle"),
+            // new Wearable("urn:decentraland:matic:collections-v2:0x27c474895ee6bb20deb00a4f7b2d63bc3ff09bfb:0", "DOCTORdripp Hater Blockers"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xd2bd1cadfe12ee9d37ff95912af7f8a97ae71ba0:0", "Fabeeo Breen White Slides FBRN"),
+        ]),
+
+        new WearableSet(displayPositions.ground.side.back8, [
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:0", "Last Slice Yasuke Kusazuri"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:1", "Last Slice Yasuke Kabuto"),
+            new Wearable("urn:decentraland:matic:collections-v2:0xe7cdc8ba8f437954a60bacaccefc0766a5e27af9:2", "Last Slice Yasuke Do"),
         ]),
 
         // TODO: Wait until getting this from MegaCube
+        //
         // new WearableSet(displayPositions.ground.side.back5, [
         //     new Wearable("urn:decentraland:matic:collections-v2:0x29470eea1ec37f25669879d0aaf9bebcaf0f92c1:1", "Monster Hall Winged Antelope Adventurer"),
         // ]),
 
         // TODO: Study why Dolce & Gabbana linked collection is not working
+        //
         // https://peer-lb.decentraland.org/lambdas/profiles?id=0x0c403e0d57eeb8f091bcfa8efdf01c00509f04f2
         // https://wearables-api.unxd.com/registry/dolcegabbana-disco-drip/address/0x0C403e0D57Eeb8f091bCfA8EFdF01c00509f04f2/assets
 
@@ -271,22 +331,19 @@ export function addWearables() {
         }
     }
 
-    // special - white neural hair to match with rabbit mask
-    displayWearableSets[8].hairColor = new Color4(1, 1, 1)
+    // need female model for the last one
+    displayWearableSets[16].isMale = false;
 
-    // special - hair color for vogu heads
-    displayWearableSets[9].hairColor = new Color4(1, 1, 1)
-    displayWearableSets[10].hairColor = new Color4(0, 0, 0)
-    displayWearableSets[11].hairColor = new Color4(1, 1, 1)
+    // render with delay
+    for (let i = 0; i < displayWearableSets.length; i++) {
+        let s = displayWearableSets[i];
 
-    displayWearableSets[14].hairColor = new Color4(0, 0, 0)
+        utils.setTimeout(1000 * (i + 1), () => {
+            var eachAvatarEntity = s.getDclAvatarEntity()
+            engine.addEntity(eachAvatarEntity)
 
-    // render
-    displayWearableSets.forEach(s => {
-        var eachAvatarEntity = s.getDclAvatarEntity()
-        engine.addEntity(eachAvatarEntity)
-
-        var eachClickableEntity = s.getDclClickableEntity()
-        engine.addEntity(eachClickableEntity)
-    })
+            var eachClickableEntity = s.getDclClickableEntity()
+            engine.addEntity(eachClickableEntity)
+        });
+    }
 }

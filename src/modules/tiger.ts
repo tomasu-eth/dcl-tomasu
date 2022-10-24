@@ -1,3 +1,4 @@
+import * as utils from '@dcl/ecs-scene-utils'
 import { WearableSet, Wearable } from "./wearables"
 
 var camera = Camera.instance
@@ -53,14 +54,16 @@ export function addTiger() {
         new Wearable("urn:decentraland:ethereum:collections-v1:community_contest:cw_native_american_tiara", "Native American Hat"),
     ]
 
-    var tigerLerpData = new TigerLerpData()
+    utils.setTimeout(500, () => {
+        var tigerLerpData = new TigerLerpData()
 
-    var tigerEntity = tiger.getDclAvatarEntity()
-    tigerEntity.addComponent(tigerLerpData)
-    engine.addEntity(tigerEntity)
+        var tigerEntity = tiger.getDclAvatarEntity()
+        tigerEntity.addComponent(tigerLerpData)
+        engine.addEntity(tigerEntity)
 
-    var tigerClickableEntity = tiger.getDclClickableEntity()
-    engine.addEntity(tigerClickableEntity)
+        var tigerClickableEntity = tiger.getDclClickableEntity()
+        engine.addEntity(tigerClickableEntity)
 
-    engine.addSystem(new TigerWalk(tigerEntity, tigerClickableEntity))
+        engine.addSystem(new TigerWalk(tigerEntity, tigerClickableEntity))
+    });
 }
